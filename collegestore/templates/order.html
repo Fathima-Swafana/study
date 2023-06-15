@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body>
+<h2>Place Your Order</h2>
+<form action="order" method="post">
+    {% csrf_token %}
+    <input type="text" name="username" placeholder="Full name"><br>
+    <input type="date" name="date" placeholder="Date"><br>
+    <input type="number" name="age" placeholder="Age"><br>
+    <h4>Gender:</h4>
+    <label>Male</label><input type="radio" name="male">
+    <label>Female</label><input type="radio" name="male">
+    <label>Other</label><input type="radio" name="male"><br>
+    <input type="number" name="mobilno" placeholder="Mobile number"><br>
+    <input type="email" name="email" placeholder="Email ID"><br>
+    <input type="text" name="address" placeholder="Address"><br>
+
+<h4><label for="main_category">Department:</label></h4>
+<select id="main_category" name="main_category">
+  <option value="category1">Science</option>
+  <option value="category2">Commerce</option>
+  <option value="category3">Humanities</option>
+</select>
+
+<h4><label for="sub_category">Subject:</label></h4>
+<select id="sub_category" name="sub_category">
+  <option value="subcategory1">Physics</option>
+  <option value="subcategory2">Chemistry</option>
+  <option value="subcategory3">Biology</option>
+</select>
+<script>
+  const mainCategoryDropdown = document.getElementById("main_category");
+  const subCategoryDropdown = document.getElementById("sub_category");
+
+  // Define the subcategory options for each main category
+  const subCategoryOptions = {
+    category1: ["Physics", "Chemistry", "Biology"],
+    category2: ["Economics", "Accountancy", "Mathematics"],
+    category3: ["Sociology", "History", "Psychology"]
+  };
+
+  // Update the subcategory dropdown options when a main category is selected
+  mainCategoryDropdown.addEventListener("change", function() {
+    // Remove all current subcategory options
+    subCategoryDropdown.innerHTML = "";
+
+    // Get the selected main category value
+    const selectedMainCategory = mainCategoryDropdown.value;
+
+    // Add the subcategory options for the selected main category
+    subCategoryOptions[selectedMainCategory].forEach(function(subCategory) {
+      const option = document.createElement("option");
+      option.text = subCategory;
+      option.value = subCategory.toLowerCase().replace(" ", "_");
+      subCategoryDropdown.appendChild(option);
+    });
+  });
+</script>
+
+
+
+
+    <h4><label for="my-dropdown">Purpose:</label></h4>
+    <select id="my-dropdown">
+        <option value="option1">Enquiry</option>
+        <option value="option2">Place order</option>
+        <option value="option3">Return</option>
+   </select>
+    <h4><label for="my-dropdown">Material:</label></h4>
+    <select id="my-dropdown">
+        <option value="option1">Record book</option>
+        <option value="option2">Note book</option>
+        <option value="option3">Exam sheet</option>
+   </select><br>
+
+    <button type="submit" class="green-button">Order</button><br>
+    {% if messages %}
+    {% for message in messages %}
+        <div class="message {% if message.tags %}{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% endif %}
+
+    <a href="{% url 'collegestoreapp:index' %}"><button type="button" class="red-button">Logout</button></a>
+
+</form>
+
+
+{% include 'footer.html' %}
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'credentials:register' %}">Register</a>
+        </li>
+         <script>
+           function redirectToWikipedia() {
+              var select = document.getElementById("department");
+              var selectedDepartment = select.options[select.selectedIndex].value;
+              if (selectedDepartment !== "") {
+                var url = "https://en.wikipedia.org/wiki/" + selectedDepartment;
+                window.location.href = url;
+              }
+           }
+        </script>
+
+            <select id="department" onchange="redirectToWikipedia()">
+                <option value="">Department</option>
+                <option value="Botony">Physics</option>
+                <option value="Zoology">Chemistry</option>
+                <option value="Mathematics">Biology</option>
+            </select>
+
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'credentials:login' %}" >Login</a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</nav>
